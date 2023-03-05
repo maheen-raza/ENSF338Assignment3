@@ -1,64 +1,75 @@
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+
 class Stack:
     def __init__(self):
-        self.items = []
-        
-    def push(self, item):
-        self.items.append(item)
-        
-    def pop(self):
-        return self.items.pop()
-    
-    def is_empty(self):
-        return self.items == []
-    
-    def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
-    
-def tokenize(expr):
-    for p in ['(',')','[',']','{','}']:
-        expr = expr.replace(p, f' {p} ')
-    return expr.split()
+        self.top = None
 
-def evaluate(expr):
-    tokens = tokenize(expr)
-    
+    def push(self, data):
+        new_node = Node(data)
+        new_node.next = self.top
+        self.top = new_node
+
+    def pop(self):
+        if self.top is None:
+            return None
+        popped_node = self.top
+        self.top = self.top.next
+        popped_node.next = None
+        return popped_node.data
+
+    def is_empty(self):
+        return self.top is None
+
+def tokenize(expression):
+    tokens = []
+    i = 0
+    while i < len(expression):
+        if expression[i] == '(' or expression[i] == ')':
+            tokens.append(expression[i])
+            i += 1
+        elif expression[i] == ' ':
+            i += 1
+        else:
+            j = i
+            while j < len(expression) and expression[j] != ' ' and expression[j] != '(' and expression[j] != ')':
+                j += 1
+            tokens.append(expression[i:j])
+            i = j
+    return tokens
+
+def evaluate(expression):
+    tokens = tokenize(expression)
     stack = Stack()
-    
     for token in tokens:
-        if token == '(':
-            pass
-        elif token in ['+', '-', '*', '/']:
-            op = token
-        elif token.isdigit():
-            e2 = int(token)
-            e1 = int(token)
-        
-            if op == '+':
-                result = e1 + e2
-            elif op == '-':
-                result = e1 - e2
-            elif op == '*':
-                result = e1 * e2
-            elif op == '/':
-                result = e1 / e2
-            stack.push(result)
-        elif token == ')':
+        if token == ')':
+            operand = stack.pop()
+            operand2 = stack.pop()
+            operator = stack.pop()
+            if operator == '+':
+                result = float(operand2) + float(operand)
+            elif operator == '-':
+                result = float(operand2) - float(operand)
+            elif operator == '*':
+                result = float(operand2) * float(operand)
+            elif operator == '/':
+                result = float(operand2) / float(operand)
+            stack.push(str(result))
+        elif token in ('+', '-', '*', '/'):
+            stack.push(token)
+        elif token == '(':
             pass
         else:
-            stack.push(int(token))
-    
+            stack.push(token)
     return stack.pop()
+
+
 
 input = input()
 output = evaluate(input)
 print(output)
-
-#print(evaluate("(+ 1 2)"))
-
-#print(evaluate("(* 3 (- 4 2))"))
-
-#print(evaluate("(/ 10 (+ 2 3))"))
 
 
 
