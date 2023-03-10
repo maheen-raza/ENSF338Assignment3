@@ -23,12 +23,12 @@ def insertion_extraction_efficient(nums):
     return res
 
 def time_insertion_extraction(nums, function):
-    start_time = time.perf_counter()
+    start_time = time.time()
     function(nums)
-    end_time = time.perf_counter()
+    end_time = time.time()
     return end_time - start_time
 
-nums = [random.randint(-1000, 1000) for _ in range(1000)]
+nums = [random.randint(-1000, 1000) for _ in range(10000)]
 times_inefficient = []
 times_efficient = []
 for i in range(100):
