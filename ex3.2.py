@@ -1,70 +1,51 @@
 import json
 import time
 import matplotlib.pyplot as plt
-import numpy as np
-
-
 
 def binarysearch(array, checknumber, startmid):
-    left=0
-    right= len(array)-1
+    left = 0
+    right = len(array) - 1
     mid = startmid
 
     while left <= right:
         if array[mid] == checknumber:
             return True
-
         elif array[mid] < checknumber:
-            left = mid +1
+            left = mid + 1
         else:
-            right = mid -1
-        mid = (left+right)//2
-
-
-
-
-
-
-
+            right = mid - 1
+        mid = (left + right) // 2
+    return False
 
 with open('ex2data.json') as f:
     array = json.load(f)
 
 with open('ex2tasks.json') as f:
-    searchtasks = json.load(f)
+    search_tasks = json.load(f)
 
-midrange = range(len(array)// 100, len(array), len(array)// 100)
+midrange = range(len(array) // 100, len(array), len(array) // 100)
 
-# create lists to store task and midpoint data
-task_list = []
-midpoint_list = []
-
-for each_number in searchtasks:
-    goatmidrange = 0
-    besttime = float('inf')
+best_midpoints = {}
+for each_number in search_tasks:
+    goat_midrange = 0
+    best_time = float('inf')
 
     for midpoint in midrange:
-        starttime = time.time()
+        start_time = time.time()
         match = binarysearch(array, each_number, midpoint)
-        endtime = time.time()
-        differencetime = endtime-starttime
-        if match and differencetime < besttime:
-            besttime = differencetime
-            goatmidrange = midpoint
+        end_time = time.time()
+        difference_time = end_time - start_time
+        if match and difference_time < best_time:
+            best_time = difference_time
+            goat_midrange = midpoint
+    best_midpoints[each_number] = goat_midrange
+    print(f"For {each_number}, best midpoint is {goat_midrange} with time: {best_time:.10f} seconds")
 
-    # add task and midpoint to lists
-    task_list.append(each_number)
-    midpoint_list.append(goatmidrange)
+x = list(best_midpoints.keys())
+y = list(best_midpoints.values())
 
-# create scatter plot of task vs. midpoint
-plt.scatter(task_list, midpoint_list)
-plt.xlabel('Task')
-plt.ylabel('Midpoint')
-plt.title('Chosen Midpoint for Each Task')
-
-# create line plot of all midpoints
-x = np.array(list(range(len(searchtasks))))
-y = np.array([midrange[i // 100] for i in range(len(searchtasks))])
-plt.plot(x, y, color='red')
-
+plt.scatter(x, y)
+plt.title('Best Midpoints for Binary Search')
+plt.xlabel('Search Tasks')
+plt.ylabel('Best Midpoints')
 plt.show()
