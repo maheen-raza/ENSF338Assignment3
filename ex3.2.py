@@ -1,5 +1,8 @@
 import json
 import time
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 
 def binarysearch(array, checknumber, startmid):
@@ -32,6 +35,8 @@ with open('ex2tasks.json') as f:
 
 midrange = range(len(array)// 100, len(array), len(array)// 100)
 
+task_list = []
+midpoint_list = []
 
 for each_number in searchtasks:
     goatmidrange = 0
@@ -45,6 +50,9 @@ for each_number in searchtasks:
         if match and differencetime < besttime:
             besttime = differencetime
             goatmidrange = midpoint
-        print(f"For {each_number}, best midpoint is {goatmidrange} with time: {besttime:.10f} seconds")
-
-   
+        #print(f"For {each_number}, best midpoint is {goatmidrange} with time: {besttime:.10f} seconds")
+plt.scatter(task_list, midpoint_list)
+plt.xlabel('Task')
+plt.ylabel('Midpoint')
+plt.title('Chosen Midpoint for Each Task')
+plt.show()
