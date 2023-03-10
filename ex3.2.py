@@ -1,4 +1,5 @@
 import json
+import time
 
 
 def binarysearch(array, checknumber, startmid):
@@ -29,9 +30,21 @@ with open('ex2data.json') as f:
 with open('ex2tasks.json') as f:
     searchtasks = json.load(f)
 
-for each_number in searchtasks:
-    match = binarysearch(array, each_number, (len(array)//2))
+midrange = range(len(array)// 100, len(array), len(array)// 100)
 
-    if match:
-        print(f"{each_number} is in the array")
-    
+
+for each_number in searchtasks:
+    goatmidrange = 0
+    besttime = float('inf')
+
+    for midpoint in midrange:
+        starttime = time.time()
+        match = binarysearch(array, each_number, midpoint)
+        endtime = time.time()
+        differencetime = endtime-starttime
+        if match and differencetime < besttime:
+            besttime = differencetime
+            goatmidrange = midpoint
+        print(f"For {each_number}, best midpoint is {goatmidrange} with time: {besttime:.10f} seconds")
+
+   
