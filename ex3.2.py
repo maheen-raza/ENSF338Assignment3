@@ -23,7 +23,7 @@ with open('ex2data.json') as f:
 with open('ex2tasks.json') as f:
     search_tasks = json.load(f)
 
-midrange = range(len(array) // 100, len(array), len(array) // 100)
+midrange = range(len(array) // 50, len(array), len(array) // 50)
 
 best_midpoints = {}
 for each_number in search_tasks:
@@ -31,9 +31,9 @@ for each_number in search_tasks:
     best_time = float('inf')
 
     for midpoint in midrange:
-        start_time = time.time()
+        start_time = time.perf_counter()
         match = binarysearch(array, each_number, midpoint)
-        end_time = time.time()
+        end_time = time.perf_counter()
         difference_time = end_time - start_time
         if match and difference_time < best_time:
             best_time = difference_time
