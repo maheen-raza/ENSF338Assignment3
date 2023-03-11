@@ -44,6 +44,9 @@ for i in range(100):  # iterate 100 times
                 best_time = difference_time
                 goat_midrange = midpoint
         best_midpoints[each_number] = goat_midrange
+for task, midpoint in best_midpoints.items():
+    print(f"Task {task}: Best midpoint = {midpoint}, Best time = {best_time}")
+
 
 x,y=zip(*best_midpoints.items())
 
