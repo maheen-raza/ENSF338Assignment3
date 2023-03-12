@@ -28,11 +28,11 @@ min_midpoint = max(len(array) // 100, 1)
 midrange = range(min_midpoint, len(array), len(array) // 100)
 
 best_midpoints = {}
-for i in range(100):  # iterate 100 times
+for i in range(100):  
     for each_number in search_tasks:
         if each_number not in array:
             continue
-        goat_midrange = 0
+        g_midrange = 0
         best_time = float('inf')
 
         for midpoint in midrange:
@@ -42,8 +42,8 @@ for i in range(100):  # iterate 100 times
             difference_time = end_time - start_time
             if match and difference_time < best_time:
                 best_time = difference_time
-                goat_midrange = midpoint
-        best_midpoints[each_number] = goat_midrange
+                g_midrange = midpoint
+        best_midpoints[each_number] = g_midrange
 for task, midpoint in best_midpoints.items():
     print(f"Task {task}: Best midpoint = {midpoint}, Best time = {best_time}")
 
