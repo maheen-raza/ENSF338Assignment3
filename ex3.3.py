@@ -1,15 +1,13 @@
 import sys
 
-my_list = []
+list =[]
 
-size = sys.getsizeof(my_list)
+oldcapacity= sys.getsizeof(list)
 
-for i in range(64):
-    my_list.append(i)
-    new_size = sys.getsizeof(my_list)
-    if new_size != size:
-        print(f"Capacity changed from {size} byte to {new_size} bytes.")
-        size = new_size
+for x in range(64):
+    list.append(x)
 
-
-print(my_list)
+    if sys.getsizeof(list) != oldcapacity:
+        currcapacity = sys.getsizeof(list)
+        print(f"{oldcapacity} capacity is changed to {currcapacity} bytes after adding {x+1} elements."
+        )

@@ -1,3 +1,6 @@
+import sys
+
+
 class Node:
     def __init__(self, data=None):
         self.data = data
@@ -65,11 +68,7 @@ def evaluate(expression):
             stack.push(token)
     return stack.pop()
 
-
-
-input = input()
-output = evaluate(input)
-print(output)
-
-
-
+input_expression = expression = sys.argv[1]
+print("Input expression:", input_expression)
+result = evaluate(input_expression)
+print("Result:", result)
